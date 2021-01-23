@@ -28,7 +28,8 @@ from tensorflow.compat.v1.keras.layers import (
 from tensorflow.keras.models import Model, load_model
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import ReduceLROnPlateau, LearningRateScheduler
-from tensorflow.keras.utils import multi_gpu_model, plot_model
+#from tensorflow.keras.utils import multi_gpu_model, plot_model
+from tensorflow.keras.utils import plot_model
 
 from sklearn.preprocessing import StandardScaler  # For the descriptors
 from sklearn.decomposition import PCA  # For the descriptors
@@ -142,7 +143,7 @@ class DDC:
         if self.mode == "train":
             # Infer input type from type(x)
             #if type(x[0]) == np.bytes_:
-            if type(x[0]) == bytes_:
+            if type(x[0]) == bytes:
                 print("Input type is 'binary mols'.")
                 self.__input_type = "mols"  # binary RDKit mols
             else:
@@ -930,7 +931,8 @@ class DDC:
             opt = Adam(lr=self.lr)
 
         checkpoint_file = (
-            checkpoint_dir + "%s--{epoch:02d}--{val_loss:.4f}--{lr:.7f}" % model_name
+            #checkpoint_dir + "%s--{epoch:02d}--{val_loss:.4f}--{lr:.7f}" % model_name
+            checkpoint_dir + "%s--{epoch:02d}--{val_loss:.4f}" % model_name
         )
 
         # If model is untrained, history is blank
