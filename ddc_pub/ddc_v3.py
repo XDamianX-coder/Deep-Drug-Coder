@@ -141,7 +141,8 @@ class DDC:
 
         if self.mode == "train":
             # Infer input type from type(x)
-            if type(x[0]) == np.bytes_:
+            #if type(x[0]) == np.bytes_:
+            if type(x[0]) == bytes_:
                 print("Input type is 'binary mols'.")
                 self.__input_type = "mols"  # binary RDKit mols
             else:
