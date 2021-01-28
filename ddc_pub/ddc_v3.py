@@ -168,9 +168,12 @@ class DDC:
                     x = self.__pca.fit_transform(x)
                 else:
                     self.__pca = None
-
+            if "safetyMargin" in kwargs:
+                safetyMargin = kwargs.get("safetyMargin")
+            else:
+                safetyMargin = 10
             self.__maxlen = (
-                kwargs.get("dataset_info")["maxlen"] + 10
+                kwargs.get("dataset_info")["maxlen"] + safetyMargin
             )  # Extend maxlen to avoid breaks in training
             self.__charset = kwargs.get("dataset_info")["charset"]
             self.__dataset_name = kwargs.get("dataset_info")["name"]
@@ -184,6 +187,7 @@ class DDC:
             )  # >0 squeezes RNN connections with Dense sandwiches
             self.__batch_size = kwargs.get("batch_size", 256)
             self.__dec_layers = kwargs.get("dec_layers", 2)
+            self.__data_raw = kwargs.get("data_raw", None)
 
             if self.input_type == "descriptors":
                 self.__codelayer_dim = x.shape[1]  # features
@@ -330,6 +334,10 @@ class DDC:
     @property
     def batch_input_length(self):
         return self.__batch_input_length
+
+    @property
+    def data_raw(self):
+        return self.__data_raw
 
     @batch_input_length.setter
     def batch_input_length(self, value):

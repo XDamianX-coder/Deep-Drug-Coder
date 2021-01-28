@@ -142,6 +142,9 @@ class SmilesVectorizer(object):
 
             for j,c in enumerate(ss):
                 charidx = self._char_to_int.get(c, self._char_to_int[self.unknownchar])
+                if j+offset >= one_hot.shape[1]:
+                    print('I am here')
+                    
                 one_hot[i,j+offset,charidx] = 1
 
             #Pad the start
